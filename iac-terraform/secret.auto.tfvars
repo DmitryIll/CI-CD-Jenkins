@@ -1,2 +1,2 @@
 tv_ya_token = "111"
-tv_ya_cloud_id = "b1gq7flktn6couidedto"
+tv_ya_cloud_id = ""
