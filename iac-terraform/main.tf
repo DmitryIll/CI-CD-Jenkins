@@ -12,8 +12,8 @@ locals {
 }
 
 provider "yandex" {
-  token = "y0_AgAAAAAEFd7ZAATuwQAAAADsuDodfIgSb4p9QBODVoXGdS6FclisQD4"
-  cloud_id = "b1gq7flktn6couidedto"
+  token = "${tv_ya_token}"
+  cloud_id = "${tv_ya_cloud_id}"
   folder_id = "b1g6k2i3lobiesnh55af"
   zone = local.zone
 }
