@@ -130,7 +130,42 @@ Removing login credentials for https://index.docker.io/v1/
 Finished: SUCCESS
 ```
 
+![Alt text](image-5.png)
+
 ---
+команды в пайплайне:
+
+---
+
+![Alt text](image-6.png)
+
+---
+
+Текстом команды:
+
+```
+/usr/local/go/bin/go test .
+```
+
+```
+docker build . -t ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER
+```
+
+```
+docker login ubuntu-bionic:8082 -u admin -p nexdm && docker push ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER && docker logout
+```
+
+---
+
+Nexus:
+
+---
+
+![Alt text](image-7.png)
+
+---
+
+
 
 ### Задание 2
 
