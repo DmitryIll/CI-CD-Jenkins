@@ -13,10 +13,122 @@
 
 В качестве ответа пришлите скриншоты с настройками проекта и результатами выполнения сборки.
 
-Создал две ВМ на ya облаке:
+Создал две ВМ на yandex-облаке:
+
 ![Alt text](image.png)
 
+на ВМ 1 jenkins:
 
+![Alt text](image-1.png)
+
+Установил go lang:
+
+![Alt text](image-2.png)
+
+Сделал копию репозитория у себя:
+
+![Alt text](image-3.png)
+
+Создал проект в jenkins и настроил Nexus:
+
+![Alt text](image-4.png)
+
+Вот результат вывода в консоли:
+
+
+
+```
+Started by user DmIl
+Running as SYSTEM
+Building in workspace /var/lib/jenkins/workspace/pip1
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/pip1/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/DmitryIll/sdvps-materials.git # timeout=10
+Fetching upstream changes from https://github.com/DmitryIll/sdvps-materials.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.17.1'
+ > git fetch --tags --progress -- https://github.com/DmitryIll/sdvps-materials.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision da5acf7bcb7f437637adf06fbd03a24dc2c8f13e (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f da5acf7bcb7f437637adf06fbd03a24dc2c8f13e # timeout=10
+Commit message: "branch main, add creds for vagrant box"
+ > git rev-list --no-walk da5acf7bcb7f437637adf06fbd03a24dc2c8f13e # timeout=10
+[pip1] $ /bin/sh -xe /tmp/jenkins10865810809485228242.sh
++ /usr/local/go/bin/go test .
+ok  	github.com/netology-code/sdvps-materials	(cached)
+[pip1] $ /bin/sh -xe /tmp/jenkins4071783132329438628.sh
++ docker build . -t ubuntu-bionic:8082/hello-world:v14
+#1 [internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.1s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 350B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/golang:1.16
+#3 ...
+
+#4 [internal] load metadata for docker.io/library/alpine:latest
+#4 DONE 0.7s
+
+#3 [internal] load metadata for docker.io/library/golang:1.16
+#3 DONE 0.7s
+
+#5 [builder 1/4] FROM docker.io/library/golang:1.16@sha256:5f6a4662de3efc6d6bb812d02e9de3d8698eea16b8eb7281f03e6f3e8383018e
+#5 DONE 0.0s
+
+#6 [stage-1 1/3] FROM docker.io/library/alpine:latest@sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 13.11kB 0.0s done
+#7 DONE 0.1s
+
+#8 [builder 2/4] WORKDIR /go/src/github.com/netology-code/sdvps-materials
+#8 CACHED
+
+#9 [builder 3/4] COPY . ./
+#9 CACHED
+
+#10 [builder 4/4] RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /app .
+#10 CACHED
+
+#11 [stage-1 2/3] RUN apk -U add ca-certificates
+#11 CACHED
+
+#12 [stage-1 3/3] COPY --from=builder /app /app
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:c902deb3ec96e029ca1ecc53fc1d5c8fb54dff051f4ba136eb57c60e2007ef42 done
+#13 naming to ubuntu-bionic:8082/hello-world:v14 0.0s done
+#13 DONE 0.0s
+[pip1] $ /bin/sh -xe /tmp/jenkins2516433137622223135.sh
++ docker login ubuntu-bionic:8082 -u admin -p nexdm
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/lib/jenkins/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
++ docker push ubuntu-bionic:8082/hello-world:v14
+The push refers to repository [ubuntu-bionic:8082/hello-world]
+42c827470373: Preparing
+925d88ae272d: Preparing
+4693057ce236: Preparing
+42c827470373: Pushed
+925d88ae272d: Pushed
+4693057ce236: Pushed
+v14: digest: sha256:0d46b6f78fb685a975340cacc9dacd67a66b4aaf75ac9442f8df061c68b21608 size: 950
++ docker logout
+Removing login credentials for https://index.docker.io/v1/
+Finished: SUCCESS
+```
 
 ---
 
