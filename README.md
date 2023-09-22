@@ -109,7 +109,7 @@ ok  	github.com/netology-code/sdvps-materials	(cached)
 #13 naming to ubuntu-bionic:8082/hello-world:v14 0.0s done
 #13 DONE 0.0s
 [pip1] $ /bin/sh -xe /tmp/jenkins2516433137622223135.sh
-+ docker login ubuntu-bionic:8082 -u admin -p nexdm
++ docker login ubuntu-bionic:8082 -u admin -p ***
 WARNING! Using --password via the CLI is insecure. Use --password-stdin.
 WARNING! Your password will be stored unencrypted in /var/lib/jenkins/.docker/config.json.
 Configure a credential helper to remove this warning. See
@@ -152,7 +152,7 @@ docker build . -t ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER
 ```
 
 ```
-docker login ubuntu-bionic:8082 -u admin -p nexdm && docker push ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER && docker logout
+docker login ubuntu-bionic:8082 -u admin -p *** && docker push ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER && docker logout
 ```
 
 ---
