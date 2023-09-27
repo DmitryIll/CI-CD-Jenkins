@@ -176,6 +176,45 @@ Nexus:
 
 В качестве ответа пришлите скриншоты с настройками проекта и результатами выполнения сборки.
 
+***Результаты***
+Создал Pip2.
+
+Настройки:
+
+![Alt text](image-10.png)
+
+Код:
+
+![Alt text](image-11.png)
+
+Выполнил успешно сборку:
+
+![Alt text](image-12.png)
+
+
+
+Черновик:
+
+```
+pipeline {
+agent any
+stages {
+stage('Git') {
+steps {git 'https://github.com/killmeplz/k8s-job-sidekiller.git'}
+}
+stage('Build') {
+steps {
+sh 'docker build .'
+sh 'helm package .helm'
+sh 'curl -u admin:123
+http://10.168.10.220:8081/repository/helm-test/ --upload-file
+k8s-job-sidekiller-0.1.0.tgz -v'
+}
+}
+}
+}
+```
+
 ---
 
 ### Задание 3
