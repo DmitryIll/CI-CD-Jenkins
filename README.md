@@ -179,7 +179,7 @@ Nexus:
 ***Результаты***
 Создал Pip2.
 
-Настройки:
+Настройки (и даже можно и без них - тоже работает):
 
 ![Alt text](image-10.png)
 
@@ -187,33 +187,45 @@ Nexus:
 
 ![Alt text](image-11.png)
 
+Или в IDE:
+
+![Alt text](image-13.png)
+
+
+Код текстом:
+
+```
+pipeline {
+ agent any
+ stages {
+  stage('Git') {
+   steps {git 'https://github.com/DmitryIll/sdvps-materials.git'}
+  }
+  stage('Test') {
+   steps {
+    sh '/usr/local/go/bin/go test .'
+   }
+  }
+  stage('Build') {
+   steps {
+    sh 'docker build . -t ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER'
+   }
+  }
+  stage('Push') {
+   steps {
+    sh 'docker login ubuntu-bionic:8082 -u admin -p nexdm && docker push ubuntu-bionic:8082/hello-world:v$BUILD_NUMBER && docker logout'   }
+  }
+ }
+}
+```
+
 Выполнил успешно сборку:
 
 ![Alt text](image-12.png)
 
 
 
-Черновик:
 
-```
-pipeline {
-agent any
-stages {
-stage('Git') {
-steps {git 'https://github.com/killmeplz/k8s-job-sidekiller.git'}
-}
-stage('Build') {
-steps {
-sh 'docker build .'
-sh 'helm package .helm'
-sh 'curl -u admin:123
-http://10.168.10.220:8081/repository/helm-test/ --upload-file
-k8s-job-sidekiller-0.1.0.tgz -v'
-}
-}
-}
-}
-```
 
 ---
 
@@ -245,7 +257,28 @@ k8s-job-sidekiller-0.1.0.tgz -v'
 
 
 
+---
+Черновик:
 
+```
+pipeline {
+agent any
+stages {
+stage('Git') {
+steps {git 'https://github.com/killmeplz/k8s-job-sidekiller.git'}
+}
+stage('Build') {
+steps {
+sh 'docker build .'
+sh 'helm package .helm'
+sh 'curl -u admin:123
+http://10.168.10.220:8081/repository/helm-test/ --upload-file
+k8s-job-sidekiller-0.1.0.tgz -v'
+}
+}
+}
+}
+```
 
 
 ---
