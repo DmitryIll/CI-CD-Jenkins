@@ -370,9 +370,106 @@ go 1.16
 
 1. Измените pipeline так, чтобы вместо Docker-образа собирался бинарный go-файл. Команду можно скопировать из Dockerfile.
 
-это пока не понятно как делать. нужно гуглить видимо.
+
+Подсмотрел в интернете, код такой:
+```
+pipeline {
+ agent any
+ stages {
+  stage('Git') {
+   steps {git 'https://github.com/DmitryIll/sdvps-materials.git'}
+  }
+  stage('Test') {
+   steps {
+    sh '/usr/local/go/bin/go test .'
+   }
+  }
+  stage('Build') {
+   steps {
+    sh '/usr/local/go/bin/go build -a -installsuffix nocgo'
+   }
+  }
+  stage('Push') {
+   steps {
+    sh 'curl -u admin:nexdm http://ubuntu-bionic:8081/repository/myrawhosted-rep/ --upload-file ./sdvps-materials'   }
+  }
+ }
+}
+```
+
+Результаты:
+
+![Alt text](image-15.png)
+
+```
+Started by user Dmitry Ill
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/pip4
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Git)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/pip4/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/DmitryIll/sdvps-materials.git # timeout=10
+Fetching upstream changes from https://github.com/DmitryIll/sdvps-materials.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.17.1'
+ > git fetch --tags --progress -- https://github.com/DmitryIll/sdvps-materials.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 9ecd04e6c345afedae27417f96e6a717168bd2ba (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 9ecd04e6c345afedae27417f96e6a717168bd2ba # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master 9ecd04e6c345afedae27417f96e6a717168bd2ba # timeout=10
+Commit message: "Update go.mod"
+ > git rev-list --no-walk 9ecd04e6c345afedae27417f96e6a717168bd2ba # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ /usr/local/go/bin/go test .
+ok  	github.com/DmitryIll/sdvps-materials	(cached)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ /usr/local/go/bin/go build -a -installsuffix nocgo
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push)
+[Pipeline] sh
++ curl -u admin:nexdm http://ubuntu-bionic:8081/repository/myrawhosted-rep/ --upload-file ./sdvps-materials
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1821k    0     0  100 1821k      0  9105k --:--:-- --:--:-- --:--:-- 9105k
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+```
+
+![Alt text](image-16.png)
+
+![Alt text](image-17.png)
+
+Правда я пока не понял как работают сами команды go и как весь процесс выполняется через какие команды.
+
 
 1. Загрузите файл в репозиторий с помощью jenkins.
+
+
 
 В качестве ответа пришлите скриншоты с настройками проекта и результатами выполнения сборки.
 
