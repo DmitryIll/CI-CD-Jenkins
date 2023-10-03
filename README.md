@@ -340,21 +340,6 @@ Removing login credentials for https://index.docker.io/v1/
 Finished: SUCCESS
 ```
 
-Вот только не понял, почему в результатах это появилось:
-
-```+ /usr/local/go/bin/go test .
-ok  	github.com/netology-code/sdvps-materials	(cached)
-```
-- от куда "netology-code" берется? Может по тому, что сначала я пробовал при отладке подключать репозиторий от нетологии для проверки работы, а потом свой подключил, а в кеше осталось от Нетлогии?
-Или может из файла go.mod подтягивается?
-
-```
-module github.com/netology-code/sdvps-materials
-
-go 1.16
-```
-?
-
 ---
 
 ### Задание 3
@@ -466,7 +451,7 @@ Finished: SUCCESS
 
 ![Alt text](image-18.png)
 
-Правда я пока не понял как работают сами команды go и как весь процесс выполняется через какие команды.
+
 
 
 1. Загрузите файл в репозиторий с помощью jenkins.
